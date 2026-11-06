@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rafa Burger | Cardápio Digital</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root {
+--bg: #101010;
+--card: #1c1c1c;
+--yellow: #ffc400;
+--white: #ffffff;
+--gray: #aaaaaa;
+}
+
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+body {
+background: var(--bg);
+color: var(--white);
+font-family: 'Montserrat', sans-serif;
+}
+
+header {
+padding: 20px 7%;
+display: flex;
+align-items: center;
+justify-content: space-between;
+border-bottom: 1px solid #292929;
+position: sticky;
+top: 0;
+z-index: 10;
+background: #101010f5;
+}
+
+.logo {
+ display: flex;
+ align-items: center;
+}
+
+.logo img {
+ display: block;
+ width: 150px;
+ height: 64px;
+ object-fit: contain;
+}
+
+.logo span {
+color: var(--yellow);
+}
+
+.header-cart {
+background: var(--yellow);
+color: #111;
+border: none;
+border-radius: 30px;
+padding: 12px 18px;
+font-weight: 800;
+cursor: pointer;
+}
+
+.hero {
+min-height: 390px;
+padding: 70px 8%;
+display: flex;
+align-items: center;
+background:
+linear-gradient(90deg, #101010 5%, #101010d9 45%, #10101030),
+url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=1600') center/cover;
+}
+
+.hero-content {
+max-width: 550px;
+}
+
+.hero h1 {
+font-size: clamp(38px, 6vw, 65px);
+line-height: 1.05;
+font-weight: 900;
+}
+
+.hero h1 span {
+color: var(--yellow);
+}
+
+.hero p {
+color: #ddd;
+margin: 20px 0;
+line-height: 1.7;
+}
+
+.hero a {
+display: inline-block;
+background: var(--yellow);
+color: #111;
+text-decoration: none;
+padding: 15px 25px;
+border-radius: 8px;
+font-weight: 800;
+}
+
+.info {
+display: flex;
+justify-content: center;
+gap: 35px;
+flex-wrap: wrap;
+padding: 22px;
+background: #191919;
+color: #ddd;
+font-size: 13px;
+}
+
+.info strong {
+color: var(--yellow);
+}
+
+main {
+padding: 55px 7%;
+max-width: 1400px;
+margin: auto;
+}
+
+.section-title {
+font-size: 30px;
+font-weight: 900;
+margin-bottom: 10px;
+}
+
+.section-subtitle {
+color: var(--gray);
+margin-bottom: 25px;
+font-size: 14px;
+}
+
+.categories {
+display: flex;
+gap: 10px;
+overflow-x: auto;
+padding: 5px 0 20px;
+}
+
+.category {
+background: #252525;
+color: white;
+border: 1px solid #383838;
+padding: 12px 20px;
+border-radius: 30px;
+cursor: pointer;
+white-space: nowrap;
+font-weight: 700;
+}
+
+.category.active,
+.category:hover {
+background: var(--yellow);
+color: #111;
+border-color: var(--yellow);
+}
+
+.products {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+gap: 22px;
+}
+
+.product {
+background: var(--card);
+border-radius: 14px;
+overflow: hidden;
+border: 1px solid #292929;
+transition: .25s;
+}
+
+.product:hover {
+transform: translateY(-5px);
+border-color: var(--yellow);
+}
+
+.product img {
+width: 100%;
+height: 175px;
+object-fit: cover;
+}
+
+.product-content {
+padding: 17px;
+}
+
+.product h3 {
+font-size: 17px;
+margin-bottom: 8px;
+}
+
+.product p {
+color: var(--gray);
+font-size: 12px;
+line-height: 1.6;
+min-height: 40px;
+}
+
+.product-bottom {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-top: 18px;
+}
+
+.price {
+color: var(--yellow);
+font-weight: 900;
+font-size: 18px;
+}
+
+.add {
+border: none;
+background: var(--yellow);
+color: #111;
+width: 37px;
+height: 37px;
+border-radius: 9px;
+font-size: 23px;
+font-weight: 900;
+cursor: pointer;
+}
+
+footer {
+text-align: center;
+padding: 30px;
+color: #888;
+border-top: 1px solid #292929;
+font-size: 12px;
+}
+
+/* QUANTIDADE DO PRODUTO */
+.quantity-modal {
+display: none;
+position: fixed;
+inset: 0;
+z-index: 25;
+background: #000b;
+justify-content: center;
+align-items: center;
+padding: 20px;
+}
+.quantity-modal.open { display: flex; }
+.quantity-box {
+width: 100%;
+max-width: 380px;
+background: #1c1c1c;
+border: 1px solid #383838;
+border-radius: 16px;
+padding: 25px;
+text-align: center;
+box-shadow: 0 18px 55px #0009;
+}
+.quantity-box h2 { margin-bottom: 10px; }
+.quantity-box p { color: var(--gray); font-size: 14px; line-height: 1.5; margin-bottom: 18px; }
+.quantity-box input {
+width: 100%;
+padding: 13px;
+margin-bottom: 18px;
+text-align: center;
+font: inherit;
+font-size: 20px;
+font-weight: 800;
+color: white;
+background: #292929;
+border: 1px solid #444;
+border-radius: 8px;
+}
+.quantity-actions { display: flex; gap: 10px; }
+.quantity-actions button {
+flex: 1;
+padding: 13px;
+border: 0;
+border-radius: 8px;
+font: inherit;
+font-weight: 800;
+cursor: pointer;
+}
+.quantity-cancel { background: #383838; color: white; }
+.quantity-confirm { background: var(--yellow); color: #111; }
+/* CARRINHO */
+
+.cart-modal {
+display: none;
+position: fixed;
+inset: 0;
+background: #000b;
+z-index: 30;
+justify-content: center;
+align-items: center;
+padding: 15px;
+}
+
+.cart-modal.open {
+display: flex;
+}
+
+.cart-box {
+background: #1b1b1b;
+width: 100%;
+max-width: 470px;
+max-height: 90vh;
+overflow-y: auto;
+border-radius: 16px;
+padding: 25px;
+}
+
+.cart-header {
+display: flex;
+justify-content: space-between;
+margin-bottom: 20px;
+}
+
+.close {
+background: none;
+color: white;
+border: none;
+font-size: 25px;
+cursor: pointer;
+}
+
+.cart-item {
+padding: 13px 0;
+border-bottom: 1px solid #383838;
+}
+
+.cart-item-top {
+display: flex;
+justify-content: space-between;
+gap: 10px;
+}
+
+.cart-item small {
+color: var(--gray);
+}
+
+.quantity {
+display: flex;
+gap: 12px;
+align-items: center;
+margin-top: 10px;
+}
+
+.quantity button {
+width: 27px;
+height: 27px;
+background: var(--yellow);
+border: none;
+border-radius: 5px;
+font-weight: bold;
+cursor: pointer;
+}
+
+.total {
+display: flex;
+justify-content: space-between;
+margin: 22px 0;
+font-size: 20px;
+font-weight: 900;
+}
+
+.total strong {
+color: var(--yellow);
+}
+
+.form-group {
+margin-bottom: 14px;
+}
+
+.form-group label {
+display: block;
+font-size: 12px;
+margin-bottom: 7px;
+color: #ddd;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+width: 100%;
+padding: 13px;
+border-radius: 8px;
+border: 1px solid #444;
+background: #292929;
+color: white;
+font-family: inherit;
+outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+border-color: var(--yellow);
+}
+
+.form-group textarea {
+resize: vertical;
+min-height: 65px;
+}
+
+.checkout {
+width: 100%;
+padding: 16px;
+background: #25d366;
+color: white;
+font-size: 15px;
+font-weight: 900;
+border: none;
+border-radius: 9px;
+cursor: pointer;
+}
+
+.empty {
+color: var(--gray);
+text-align: center;
+padding: 25px;
+}
+
+@media(max-width:600px) {
+.logo img { width: 125px; height: 54px; }
+header { padding: 16px 5%; }
+.hero { min-height: 340px; padding: 45px 6%; }
+main { padding: 40px 5%; }
+.products { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.product img { height: 125px; }
+.product-content { padding: 12px; }
+.product h3 { font-size: 14px; }
+.product p { font-size: 11px; }
+.price { font-size: 14px; }
+.add { width: 32px; height: 32px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<a class="logo" href="#" aria-label="Rafa Burger - início"><img src="rafa-burger-logo.png" alt="Logo Rafa Burger Sanduicheria"></a>
+<button class="header-cart" onclick="openCart()">
+🛒 Meu pedido (<span id="cart-count">0</span>)
+</button>
+</header>
+
+<section class="hero">
+<div class="hero-content">
+<h1>A FOME BATEU?<br><span>PEDE RAFA!</span></h1>
+<p>Hambúrgueres preparados com muito sabor, qualidade e aquele capricho que você merece.</p>
+<a href="#cardapio">VER CARDÁPIO 🍔</a>
+</div>
+</section>
+
+<div class="info">
+<div>🍔 <strong>Feito na hora</strong></div>
+<div>🛵 <strong>Entrega e retirada</strong></div>
+<div>❤️ <strong>Qualidade e sabor</strong></div>
+</div>
+
+<main id="cardapio">
+<h2 class="section-title">NOSSO CARDÁPIO</h2>
+<p class="section-subtitle">Escolha seus favoritos e monte seu pedido!</p>
+
+<div class="categories" id="categories"></div>
+<div class="products" id="products"></div>
+</main>
+
+<footer>
+<h3>RAFA BURGER 🍔</h3>
+<p>O sabor que conquista!</p>
+<p style="margin-top:12px">© 2026 Rafa Burger. Todos os direitos reservados.</p>
+</footer>
+
+<div class="quantity-modal" id="quantity-modal" role="dialog" aria-modal="true" aria-labelledby="quantity-title" onclick="if(event.target === this) closeQuantityModal()">
+<div class="quantity-box">
+<h2 id="quantity-title">Quantas unidades?</h2>
+<p id="quantity-product-name">Informe a quantidade deste item.</p>
+<input id="quantity-input" type="number" min="1" step="1" value="1" inputmode="numeric" aria-label="Quantidade">
+<div class="quantity-actions">
+<button type="button" class="quantity-cancel" onclick="closeQuantityModal()">Cancelar</button>
+<button type="button" class="quantity-confirm" onclick="confirmAddToCart()">Adicionar</button>
+</div>
+</div>
+</div>
+<!-- CARRINHO -->
+
+<div class="cart-modal" id="cart-modal">
+<div class="cart-box">
+<div class="cart-header">
+<h2>🛒 Seu pedido</h2>
+<button class="close" onclick="closeCart()">×</button>
+</div>
+
+<div id="cart-items"></div>
+
+<div class="total">
+<span>Total:</span>
+<strong id="cart-total">R$ 0,00</strong>
+</div>
+
+<form id="checkout-form">
+<div class="form-group">
+<label>Seu nome *</label>
+<input id="customer" required placeholder="Digite seu nome">
+</div>
+
+<div class="form-group">
+<label>Tipo de pedido *</label>
+<select id="delivery" required onchange="toggleAddress()">
+<option value="Entrega">Entrega</option>
+<option value="Retirada no balcão">Retirada no balcão</option>
+</select>
+</div>
+
+<div class="form-group" id="address-group">
+<label>Endereço completo *</label>
+<input id="address" placeholder="Rua, número e bairro">
+</div>
+
+<div class="form-group">
+<label>Forma de pagamento *</label>
+<select id="payment" required>
+<option value="">Selecione</option>
+<option>Pix</option>
+<option>Dinheiro</option>
+<option>Cartão de crédito</option>
+<option>Cartão de débito</option>
+</select>
+</div>
+
+<div class="form-group">
+<label>Observações</label>
+<textarea id="notes" placeholder="Alguma observação?"></textarea>
+</div>
+
+<button type="submit" class="checkout">
+FINALIZAR PEDIDO PELO WHATSAPP
+</button>
+</form>
+</div>
+</div>
+
+<script>
+
+// CONFIGURAÇÃO DA LOJA
+// Coloque seu WhatsApp com DDI e DDD, somente números.
+const WHATSAPP = "556282313889";
+
+// CADASTRO DOS PRODUTOS
+// Altere nomes, preços, descrições e fotos aqui.
+
+const productsData = [
+{
+id: 1,
+name: "X-Burger",
+category: "Hambúrgueres",
+description: "Pão, hambúrguer artesanal, queijo e molho especial.",
+price: 18.00,
+image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600"
+},
+{
+id: 2,
+name: "X-Salada",
+category: "Hambúrgueres",
+description: "Hambúrguer, queijo, alface, tomate e molho especial.",
+price: 22.00,
+image: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=600"
+},
+{
+id: 3,
+name: "X-Bacon",
+category: "Hambúrgueres",
+description: "Hambúrguer, queijo, bacon crocante e molho.",
+price: 25.00,
+image: "https://images.unsplash.com/photo-1553979459-d2229ba7433a?w=600"
+},
+{
+id: 4,
+name: "X-Tudo",
+category: "Hambúrgueres",
+description: "Um lanche completo, caprichado e cheio de sabor.",
+price: 29.00,
+image: "https://images.unsplash.com/photo-157 burger?w=600"
+},
+{
+id: 5,
+name: "Cachorro-quente",
+category: "Cachorro-quente",
+description: "Pão, salsicha, molho e acompanhamentos.",
+price: 15.00,
+image: "https://images.unsplash.com/photo-1612392062798-2dbaa1a3d2e5?w=600"
+},
+{
+id: 6,
+name: "Batata frita",
+category: "Porções",
+description: "Batatas crocantes e deliciosas.",
+price: 18.00,
+image: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=600"
+},
+{
+id: 7,
+name: "Refrigerante lata",
+category: "Bebidas",
+description: "Lata 350ml. Consulte os sabores disponíveis.",
+price: 6.00,
+image: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=600"
+},
+{
+id: 8,
+name: "Suco natural",
+category: "Bebidas",
+description: "Suco natural, consulte os sabores.",
+price: 8.00,
+image: "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=600"
+}
+];
+
+let cart = [];
+let pendingProduct = null;
+let activeCategory = "Todos";
+
+const money = value => value.toLocaleString("pt-BR", {
+style: "currency",
+currency: "BRL"
+});
+
+function renderCategories() {
+const categories = ["Todos", ...new Set(productsData.map(p => p.category))];
+
+document.getElementById("categories").innerHTML =
+categories.map(cat => `
+<button class="category ${activeCategory === cat ? "active" : ""}"
+onclick="filterCategory('${cat}')">
+${cat}
+</button>
+`).join("");
+}
+
+function filterCategory(category) {
+activeCategory = category;
+renderCategories();
+renderProducts();
+}
+
+function renderProducts() {
+const filtered = activeCategory === "Todos"
+? productsData
+: productsData.filter(p => p.category === activeCategory);
+
+document.getElementById("products").innerHTML =
+filtered.map(p => `
+<article class="product">
+<img src="${p.image}" alt="${p.name}"
+onerror="this.src='https://placehold.co/600x400/222222/ffc400?text=Rafa+Burger'">
+<div class="product-content">
+<h3>${p.name}</h3>
+<p>${p.description}</p>
+<div class="product-bottom">
+<span class="price">${money(p.price)}</span>
+<button class="add" onclick="addToCart(${p.id})">+</button>
+</div>
+</div>
+</article>
+`).join("");
+}
+
+function addToCart(id) {
+const product = productsData.find(p => p.id === id);
+if (!product) return;
+
+pendingProduct = product;
+document.getElementById("quantity-product-name").textContent = `Quantas unidades de ${product.name} deseja adicionar?`;
+document.getElementById("quantity-input").value = 1;
+document.getElementById("quantity-modal").classList.add("open");
+setTimeout(() => {
+const input = document.getElementById("quantity-input");
+input.focus();
+input.select();
+}, 0);
+}
+
+function closeQuantityModal() {
+document.getElementById("quantity-modal").classList.remove("open");
+pendingProduct = null;
+}
+
+function confirmAddToCart() {
+const quantity = Number(document.getElementById("quantity-input").value);
+if (!Number.isInteger(quantity) || quantity < 1) {
+alert("Informe uma quantidade inteira igual ou maior que 1.");
+document.getElementById("quantity-input").focus();
+return;
+}
+
+const product = pendingProduct;
+if (!product) return;
+const item = cart.find(p => p.id === product.id);
+if (item) {
+item.quantity += quantity;
+} else {
+cart.push({...product, quantity});
+}
+
+closeQuantityModal();
+updateCart();
+}
+
+function changeQuantity(id, amount) {
+const item = cart.find(p => p.id === id);
+if (!item) return;
+
+item.quantity += amount;
+
+if (item.quantity <= 0) {
+cart = cart.filter(p => p.id !== id);
+}
+
+updateCart();
+}
+
+function updateCart() {
+const count = cart.reduce((sum, p) => sum + p.quantity, 0);
+const total = cart.reduce((sum, p) => sum + p.price * p.quantity, 0);
+
+document.getElementById("cart-count").textContent = count;
+document.getElementById("cart-total").textContent = money(total);
+
+const container = document.getElementById("cart-items");
+
+if (cart.length === 0) {
+container.innerHTML = '<div class="empty">Seu carrinho está vazio 🍔</div>';
+return;
+}
+
+container.innerHTML = cart.map(p => `
+<div class="cart-item">
+<div class="cart-item-top">
+<strong>${p.name}</strong>
+<strong>${money(p.price * p.quantity)}</strong>
+</div>
+<small>${money(p.price)} cada</small>
+<div class="quantity">
+<button onclick="changeQuantity(${p.id}, -1)">-</button>
+<span>${p.quantity}</span>
+<button onclick="changeQuantity(${p.id}, 1)">+</button>
+</div>
+</div>
+`).join("");
+}
+
+function openCart() {
+document.getElementById("cart-modal").classList.add("open");
+}
+
+function closeCart() {
+document.getElementById("cart-modal").classList.remove("open");
+}
+
+function toggleAddress() {
+const delivery = document.getElementById("delivery").value;
+const group = document.getElementById("address-group");
+const address = document.getElementById("address");
+
+group.style.display = delivery === "Entrega" ? "block" : "none";
+address.required = delivery === "Entrega";
+}
+
+document.getElementById("checkout-form").addEventListener("submit", function(e) {
+e.preventDefault();
+
+if (cart.length === 0) {
+alert("Adicione pelo menos um produto ao carrinho!");
+return;
+}
+
+if (!/^\d{12,13}$/.test(WHATSAPP)) {
+alert("Configure o número correto do WhatsApp da loja no código.");
+return;
+}
+
+const name = document.getElementById("customer").value.trim();
+const delivery = document.getElementById("delivery").value;
+const address = document.getElementById("address").value.trim();
+const payment = document.getElementById("payment").value;
+const notes = document.getElementById("notes").value.trim();
+
+if (!name || !payment || (delivery === "Entrega" && !address)) {
+alert("Preencha todos os campos obrigatórios.");
+return;
+}
+
+const total = cart.reduce((sum, p) => sum + p.price * p.quantity, 0);
+
+let message = `🍔 *NOVO PEDIDO - RAFA BURGER*\n\n`;
+message += `👤 Cliente: ${name}\n`;
+message += `📦 Tipo: ${delivery}\n`;
+
+if (delivery === "Entrega") {
+message += `📍 Endereço: ${address}\n`;
+}
+
+message += `\n*ITENS DO PEDIDO:*\n`;
+
+cart.forEach(p => {
+message += `\n${p.quantity}x ${p.name} - ${money(p.price * p.quantity)}`;
+});
+
+message += `\n\n💰 *TOTAL: ${money(total)}*`;
+message += `\n💳 Pagamento: ${payment}`;
+
+if (notes) {
+message += `\n📝 Observações: ${notes}`;
+}
+
+message += `\n\nPedido enviado pelo cardápio digital Rafa Burger.`;
+
+const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message)}`;
+
+window.open(url, "_blank");
+});
+
+renderCategories();
+renderProducts();
+updateCart();
+toggleAddress();
+
+</script>
+
+</body>
+</html>
