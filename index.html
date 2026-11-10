@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -66,22 +66,6 @@ padding: 12px 18px;
 font-weight: 800;
 cursor: pointer;
 }
-
-.admin-trigger { background:#292929; color:#fff; border:1px solid #444; border-radius:30px; padding:12px 16px; font-weight:800; cursor:pointer; margin-right:8px; }
-.admin-modal { display:none; position:fixed; inset:0; z-index:40; background:#000d; justify-content:center; align-items:center; padding:16px; }
-.admin-modal.open { display:flex; }
-.admin-box { width:100%; max-width:760px; max-height:92vh; overflow-y:auto; background:#1b1b1b; border:1px solid #383838; border-radius:16px; padding:24px; }
-.admin-form { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-.admin-field { display:flex; flex-direction:column; gap:6px; }
-.admin-field.full { grid-column:1/-1; }
-.admin-field input,.admin-field textarea { width:100%; padding:11px; border-radius:8px; border:1px solid #444; background:#292929; color:white; font:inherit; }
-.admin-actions,.admin-product-actions { display:flex; gap:8px; margin-top:12px; }
-.admin-actions button,.admin-product button { border:0; border-radius:8px; padding:10px 13px; font:inherit; font-weight:800; cursor:pointer; }
-.admin-save { background:var(--yellow); color:#111; }
-.admin-product { display:flex; justify-content:space-between; padding:12px 0; border-top:1px solid #383838; }
-.admin-notice,.admin-product p { color:var(--gray); font-size:12px; margin-top:8px; }
-.admin-product button { background:#383838; color:white; }
-.admin-product button.delete { background:#552727; }
 
 .hero {
 min-height: 390px;
@@ -469,21 +453,21 @@ main { padding: 40px 5%; }
 
 <section class="hero">
 <div class="hero-content">
-<h1>A FOME BATEU?<br><span>PEDE UM RAFA!</span></h1>
-<p>Bateu aquela fome? Escolha seu lanche e deixa o resto com a gente.</p>
-<a href="#cardapio">VER O CARDÁPIO</a>
+<h1>A FOME BATEU?<br><span>PEDE RAFA!</span></h1>
+<p>Hambúrgueres preparados com muito sabor, qualidade e aquele capricho que você merece.</p>
+<a href="#cardapio">VER CARDÁPIO 🍔</a>
 </div>
 </section>
 
 <div class="info">
-<div>🍔 <strong>Preparado na hora</strong></div>
-<div>🛵 <strong>Peça pra entregar ou retire</strong></div>
-<div>❤️ <strong>Feito com capricho</strong></div>
+<div>🍔 <strong>Feito na hora</strong></div>
+<div>🛵 <strong>Entrega e retirada</strong></div>
+<div>❤️ <strong>Qualidade e sabor</strong></div>
 </div>
 
 <main id="cardapio">
-<h2 class="section-title">O QUE VAI SER HOJE?</h2>
-<p class="section-subtitle">Dá uma olhada no cardápio e escolha o que deu vontade.</p>
+<h2 class="section-title">NOSSO CARDÁPIO</h2>
+<p class="section-subtitle">Escolha seus favoritos e monte seu pedido!</p>
 
 <div class="categories" id="categories"></div>
 <div class="products" id="products"></div>
@@ -491,14 +475,14 @@ main { padding: 40px 5%; }
 
 <footer>
 <h3>RAFA BURGER 🍔</h3>
-<p>Do nosso balcão pra sua casa, com carinho.</p>
+<p>O sabor que conquista!</p>
 <p style="margin-top:12px">© 2026 Rafa Burger. Todos os direitos reservados.</p>
 </footer>
 
 <div class="quantity-modal" id="quantity-modal" role="dialog" aria-modal="true" aria-labelledby="quantity-title" onclick="if(event.target === this) closeQuantityModal()">
 <div class="quantity-box">
 <h2 id="quantity-title">Quantas unidades?</h2>
-<p id="quantity-product-name">Escolha quantas unidades você quer.</p>
+<p id="quantity-product-name">Informe a quantidade deste item.</p>
 <input id="quantity-input" type="number" min="1" step="1" value="1" inputmode="numeric" aria-label="Quantidade">
 <div class="quantity-actions">
 <button type="button" class="quantity-cancel" onclick="closeQuantityModal()">Cancelar</button>
@@ -525,12 +509,7 @@ main { padding: 40px 5%; }
 <form id="checkout-form">
 <div class="form-group">
 <label>Seu nome *</label>
-<input id="customer" required placeholder="Como podemos chamar você?">
-</div>
-
-<div class="form-group">
-<label>Telefone / WhatsApp *</label>
-<input id="customer-phone" type="tel" required inputmode="tel" placeholder="(62) 99999-9999">
+<input id="customer" required placeholder="Digite seu nome">
 </div>
 
 <div class="form-group">
@@ -548,7 +527,7 @@ main { padding: 40px 5%; }
 
 <div class="form-group">
 <label>Forma de pagamento *</label>
-<select id="payment" required onchange="toggleChange()">
+<select id="payment" required>
 <option value="">Selecione</option>
 <option>Pix</option>
 <option>Dinheiro</option>
@@ -557,18 +536,13 @@ main { padding: 40px 5%; }
 </select>
 </div>
 
-<div class="form-group" id="change-group" style="display:none">
-<label><input id="needs-change" type="checkbox" onchange="toggleChange()"> Preciso de troco</label>
-<input id="change-for" type="number" min="0.01" step="0.01" placeholder="Troco para quanto? Ex.: 50,00" style="display:none">
-</div>
-
 <div class="form-group">
 <label>Observações</label>
-<textarea id="notes" placeholder="Quer pedir sem algum ingrediente ou deixar um recado?"></textarea>
+<textarea id="notes" placeholder="Alguma observação?"></textarea>
 </div>
 
 <button type="submit" class="checkout">
-ENVIAR MEU PEDIDO PELO WHATSAPP
+FINALIZAR PEDIDO PELO WHATSAPP
 </button>
 </form>
 </div>
@@ -583,12 +557,12 @@ const WHATSAPP = "556282313889";
 // CADASTRO DOS PRODUTOS
 // Altere nomes, preços, descrições e fotos aqui.
 
-let productsData = [
+const productsData = [
 {
 id: 1,
 name: "X-Burger",
 category: "Hambúrgueres",
-description: "Pão macio, hambúrguer, queijo e molho especial. Simples e gostoso.",
+description: "Pão, hambúrguer artesanal, queijo e molho especial.",
 price: 18.00,
 image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600"
 },
@@ -596,7 +570,7 @@ image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600"
 id: 2,
 name: "X-Salada",
 category: "Hambúrgueres",
-description: "Hambúrguer com queijo, alface, tomate e molho especial.",
+description: "Hambúrguer, queijo, alface, tomate e molho especial.",
 price: 22.00,
 image: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=600"
 },
@@ -604,7 +578,7 @@ image: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=600"
 id: 3,
 name: "X-Bacon",
 category: "Hambúrgueres",
-description: "Queijo, bacon crocante e molho pra deixar o hambúrguer ainda melhor.",
+description: "Hambúrguer, queijo, bacon crocante e molho.",
 price: 25.00,
 image: "https://images.unsplash.com/photo-1553979459-d2229ba7433a?w=600"
 },
@@ -612,15 +586,15 @@ image: "https://images.unsplash.com/photo-1553979459-d2229ba7433a?w=600"
 id: 4,
 name: "X-Tudo",
 category: "Hambúrgueres",
-description: "Pra quem está com fome de verdade e gosta de um lanche bem servido.",
+description: "Um lanche completo, caprichado e cheio de sabor.",
 price: 29.00,
-image: "https://images.unsplash.com/photo-1553979459-d2229ba7433a?w=600"
+image: "https://images.unsplash.com/photo-157 burger?w=600"
 },
 {
 id: 5,
 name: "Cachorro-quente",
 category: "Cachorro-quente",
-description: "Pão, salsicha, molho e aquele acompanhamento que não pode faltar.",
+description: "Pão, salsicha, molho e acompanhamentos.",
 price: 15.00,
 image: "https://images.unsplash.com/photo-1612392062798-2dbaa1a3d2e5?w=600"
 },
@@ -628,7 +602,7 @@ image: "https://images.unsplash.com/photo-1612392062798-2dbaa1a3d2e5?w=600"
 id: 6,
 name: "Batata frita",
 category: "Porções",
-description: "Porção de batata pra dividir — ou não.",
+description: "Batatas crocantes e deliciosas.",
 price: 18.00,
 image: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=600"
 },
@@ -636,7 +610,7 @@ image: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=600"
 id: 7,
 name: "Refrigerante lata",
 category: "Bebidas",
-description: "Lata de 350 ml. Conta pra gente qual sabor você prefere.",
+description: "Lata 350ml. Consulte os sabores disponíveis.",
 price: 6.00,
 image: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=600"
 },
@@ -644,7 +618,7 @@ image: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=600"
 id: 8,
 name: "Suco natural",
 category: "Bebidas",
-description: "Suco natural. Pergunte pra gente quais sabores tem hoje.",
+description: "Suco natural, consulte os sabores.",
 price: 8.00,
 image: "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=600"
 }
@@ -659,28 +633,16 @@ style: "currency",
 currency: "BRL"
 });
 
-function escapeHTML(value) { return String(value).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
-async function loadProducts() {
-try { const response=await fetch("/api/products",{cache:"no-store"}); if(!response.ok)throw new Error("Cardápio indisponível"); const remote=await response.json(); if(Array.isArray(remote)){productsData=remote;if(activeCategory!=="Todos"&&!remote.some(p=>p.category===activeCategory))activeCategory="Todos";cart=cart.map(item=>{const current=remote.find(p=>p.id===item.id);return current?{...item,...current}:item});renderCategories();renderProducts();updateCart();} }
-catch(error){console.warn("Usando o cardápio local até a API ficar disponível.",error);}
-}
-
-function toggleChange() {
-const show=document.getElementById("payment").value==="Dinheiro";
-const checkbox=document.getElementById("needs-change"),input=document.getElementById("change-for");
-document.getElementById("change-group").style.display=show?"block":"none";
-if(!show)checkbox.checked=false;
-input.style.display=show&&checkbox.checked?"block":"none";
-input.required=show&&checkbox.checked;
-}
-
 function renderCategories() {
 const categories = ["Todos", ...new Set(productsData.map(p => p.category))];
 
-document.getElementById("categories").innerHTML = categories.map(cat =>
-`<button class="category ${activeCategory === cat ? "active" : ""}" data-category="${escapeHTML(cat)}">${escapeHTML(cat)}</button>`
-).join("");
-document.querySelectorAll("[data-category]").forEach(button=>button.addEventListener("click",()=>filterCategory(button.dataset.category)));
+document.getElementById("categories").innerHTML =
+categories.map(cat => `
+<button class="category ${activeCategory === cat ? "active" : ""}"
+onclick="filterCategory('${cat}')">
+${cat}
+</button>
+`).join("");
 }
 
 function filterCategory(category) {
@@ -697,11 +659,11 @@ const filtered = activeCategory === "Todos"
 document.getElementById("products").innerHTML =
 filtered.map(p => `
 <article class="product">
-<img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.name)}"
+<img src="${p.image}" alt="${p.name}"
 onerror="this.src='https://placehold.co/600x400/222222/ffc400?text=Rafa+Burger'">
 <div class="product-content">
-<h3>${escapeHTML(p.name)}</h3>
-<p>${escapeHTML(p.description)}</p>
+<h3>${p.name}</h3>
+<p>${p.description}</p>
 <div class="product-bottom">
 <span class="price">${money(p.price)}</span>
 <button class="add" onclick="addToCart(${p.id})">+</button>
@@ -716,7 +678,7 @@ const product = productsData.find(p => p.id === id);
 if (!product) return;
 
 pendingProduct = product;
-document.getElementById("quantity-product-name").textContent = `Quantas unidades de ${product.name} você quer?`;
+document.getElementById("quantity-product-name").textContent = `Quantas unidades de ${product.name} deseja adicionar?`;
 document.getElementById("quantity-input").value = 1;
 document.getElementById("quantity-modal").classList.add("open");
 setTimeout(() => {
@@ -775,14 +737,14 @@ document.getElementById("cart-total").textContent = money(total);
 const container = document.getElementById("cart-items");
 
 if (cart.length === 0) {
-container.innerHTML = '<div class="empty">Seu pedido ainda está vazio. Escolha um lanche pra começar! 🍔</div>';
+container.innerHTML = '<div class="empty">Seu carrinho está vazio 🍔</div>';
 return;
 }
 
 container.innerHTML = cart.map(p => `
 <div class="cart-item">
 <div class="cart-item-top">
-<strong>${escapeHTML(p.name)}</strong>
+<strong>${p.name}</strong>
 <strong>${money(p.price * p.quantity)}</strong>
 </div>
 <small>${money(p.price)} cada</small>
@@ -812,7 +774,7 @@ group.style.display = delivery === "Entrega" ? "block" : "none";
 address.required = delivery === "Entrega";
 }
 
-document.getElementById("checkout-form").addEventListener("submit", async function(e) {
+document.getElementById("checkout-form").addEventListener("submit", function(e) {
 e.preventDefault();
 
 if (cart.length === 0) {
@@ -826,51 +788,20 @@ return;
 }
 
 const name = document.getElementById("customer").value.trim();
-const phone = document.getElementById("customer-phone").value.trim();
 const delivery = document.getElementById("delivery").value;
 const address = document.getElementById("address").value.trim();
 const payment = document.getElementById("payment").value;
 const notes = document.getElementById("notes").value.trim();
-const changeFor = document.getElementById("change-for").value;
 
-const needsChange = document.getElementById("needs-change").checked;
-if (!name || !phone || !payment || (delivery === "Entrega" && !address) || (payment === "Dinheiro" && needsChange && !changeFor)) {
+if (!name || !payment || (delivery === "Entrega" && !address)) {
 alert("Preencha todos os campos obrigatórios.");
 return;
 }
 
-const submitButton = this.querySelector('button[type="submit"]');
-submitButton.disabled = true;
-submitButton.textContent = "SALVANDO SEU PEDIDO...";
-const whatsappWindow = window.open("about:blank", "_blank");
-let savedOrder;
-try {
-const response = await fetch("/api/orders", {
-method: "POST",
-headers: {"Content-Type":"application/json"},
-body: JSON.stringify({
-customer: name, phone, fulfillment: delivery, address, payment,
-changeFor: payment === "Dinheiro" && needsChange ? changeFor : null, notes,
-items: cart.map(p => ({productId:p.id, quantity:p.quantity}))
-})
-});
-const result = await response.json();
-if (!response.ok) throw new Error(result.error || "Não foi possível salvar o pedido.");
-savedOrder = result;
-} catch (error) {
-if (whatsappWindow) whatsappWindow.close();
-alert(error.message || "Não foi possível enviar o pedido. Tente novamente.");
-submitButton.disabled = false;
-submitButton.textContent = "ENVIAR MEU PEDIDO PELO WHATSAPP";
-return;
-}
+const total = cart.reduce((sum, p) => sum + p.price * p.quantity, 0);
 
-const total = savedOrder.total;
-
-let message = `🍔 *NOVO PEDIDO - RAFA BURGER*\n`;
-message += `🔢 Pedido: ${savedOrder.number}\n\n`;
+let message = `🍔 *NOVO PEDIDO - RAFA BURGER*\n\n`;
 message += `👤 Cliente: ${name}\n`;
-message += `📱 Telefone: ${phone}\n`;
 message += `📦 Tipo: ${delivery}\n`;
 
 if (delivery === "Entrega") {
@@ -879,40 +810,30 @@ message += `📍 Endereço: ${address}\n`;
 
 message += `\n*ITENS DO PEDIDO:*\n`;
 
-savedOrder.items.forEach(p => {
-message += `\n${p.quantity}x ${p.name} - ${money(p.subtotal)}`;
+cart.forEach(p => {
+message += `\n${p.quantity}x ${p.name} - ${money(p.price * p.quantity)}`;
 });
 
 message += `\n\n💰 *TOTAL: ${money(total)}*`;
 message += `\n💳 Pagamento: ${payment}`;
-if (payment === "Dinheiro" && needsChange) message += `\n💵 Troco para: ${money(Number(changeFor))}`;
 
 if (notes) {
 message += `\n📝 Observações: ${notes}`;
 }
 
-const trackingUrl = `${window.location.origin}/acompanhar.html?token=${savedOrder.trackingToken}`;
-message += `\n\n🔎 Acompanhe seu pedido: ${trackingUrl}`;
 message += `\n\nPedido enviado pelo cardápio digital Rafa Burger.`;
 
 const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message)}`;
-if (whatsappWindow) whatsappWindow.location.href = url;
-else { alert(`Pedido ${savedOrder.number} salvo. O navegador bloqueou a janela do WhatsApp; abriremos em seguida.`); window.location.href = url; }
+
+window.open(url, "_blank");
 });
 
 renderCategories();
 renderProducts();
 updateCart();
 toggleAddress();
-toggleChange();
-loadProducts();
-setInterval(loadProducts, 30000);
 
 </script>
 
 </body>
 </html>
-
-
-
-
